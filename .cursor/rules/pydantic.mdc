@@ -1,0 +1,357 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+# Cursor Rules for Pydantic Python (Strict Mode)
+
+# ====================
+# Core Principles
+# ====================
+# - Always use Pydantic v2 (latest version)
+# - Enable strict mode by default for type safety
+# - Prefer explicit over implicit type definitions
+# - Use type hints for all fields
+# - Validate data at boundaries (API, database, external services)
+
+# ====================
+# Model Definition Rules
+# ====================
+
+from pydantic import BaseModel, Field, ConfigDict, field_validator, model_validator
+from typing import Optional, List, Dict, Any, Union, Literal
+from datetime import datetime, date
+from decimal import Decimal
+from enum import Enum
+
+# Always use ConfigDict for configuration (Pydantic v2)
+class StrictModel(BaseModel):
+    model_config = ConfigDict(
+        # Strict mode - no type coercion
+        strict=True,
+        
+        # Validate on assignment
+        validate_assignment=True,
+        
+        # Use enum values instead of names
+        use_enum_values=True,
+        
+        # Forbid extra fields
+        extra='forbid',
+        
+        # Validate default values
+        validate_default=True,
+        
+        # Enable arbitrary types if needed
+        arbitrary_types_allowed=False,
+        
+        # Freeze model after creation (immutable)
+        frozen=False,  # Set to True for immutable models
+        
+        # JSON schema extras
+        json_schema_extra={
+            "example": {
+                "field1": "value1",
+                "field2": 123
+            }
+        }
+    )
+
+# ====================
+# Field Definition Rules
+# ====================
+
+class UserModel(BaseModel):
+    model_config = ConfigDict(strict=True, extra='forbid')
+    
+    # Required fields with no default
+    id: int
+    username: str
+    
+    # Optional fields with explicit None default
+    email: Optional[str] = None
+    
+    # Fields with defaults
+    is_active: bool = True
+    
+    # Fields with Field() for additional validation
+    age: int = Field(gt=0, le=150, description="User's age")
+    
+    # Constrained strings
+    password: str = Field(min_length=8, max_length=128)
+    
+    # Decimal for financial data
+    balance: Decimal = Field(decimal_places=2, ge=Decimal('0'))
+    
+    # Datetime fields
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    
+    # Lists with type constraints
+    tags: List[str] = Field(default_factory=list, max_length=10)
+    
+    # Nested models
+    profile: Optional['ProfileModel'] = None
+    
+    # Union types (be explicit)
+    status: Union[Literal['active'], Literal['inactive'], Literal['pending']]
+
+# ====================
+# Validation Rules
+# ====================
+
+class ValidatedModel(BaseModel):
+    model_config = ConfigDict(strict=True)
+    
+    email: str
+    phone: Optional[str] = None
+    age: int
+    
+    # Field validator (single field)
+    @field_validator('email')
+    @classmethod
+    def validate_email(cls, v: str) -> str:
+        if '@' not in v:
+            raise ValueError('Invalid email format')
+        return v.lower()
+    
+    # Multiple field validator
+    @field_validator('phone')
+    @classmethod
+    def validate_phone(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return v
+        # Remove non-digits
+        digits = ''.join(filter(str.isdigit, v))
+        if len(digits) != 10:
+            raise ValueError('Phone must be 10 digits')
+        return digits
+    
+    # Model validator (cross-field validation)
+    @model_validator(mode='after')
+    def validate_model(self) -> 'ValidatedModel':
+        if self.age < 18 and not self.phone:
+            raise ValueError('Phone required for minors')
+        return self
+
+# ====================
+# Enum Usage Rules
+# ====================
+
+class StatusEnum(str, Enum):
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
+    PENDING = 'pending'
+
+class EnumModel(BaseModel):
+    model_config = ConfigDict(strict=True, use_enum_values=True)
+    
+    # Use enums for constrained choices
+    status: StatusEnum
+    
+    # Optional enum
+    priority: Optional[StatusEnum] = None
+
+# ====================
+# Error Handling Rules
+# ====================
+
+from pydantic import ValidationError
+
+def safe_parse(data: dict, model: type[BaseModel]) -> Optional[BaseModel]:
+    """Always handle ValidationError explicitly"""
+    try:
+        return model(**data)
+    except ValidationError as e:
+        # Log detailed error information
+        for error in e.errors():
+            print(f"Field: {error['loc']}, Error: {error['msg']}")
+        return None
+
+# ====================
+# Serialization Rules
+# ====================
+
+class SerializableModel(BaseModel):
+    model_config = ConfigDict(strict=True)
+    
+    id: int
+    private_field: str = Field(exclude=True)  # Exclude from serialization
+    
+    # Custom serialization
+    def model_dump_safe(self) -> dict:
+        """Custom dump with specific options"""
+        return self.model_dump(
+            exclude_none=True,
+            exclude_unset=True,
+            by_alias=True,
+            exclude={'private_field'}
+        )
+
+# ====================
+# Type Conversion Rules (when strict=False selectively)
+# ====================
+
+class SmartModel(BaseModel):
+    # Selective strict mode per field
+    strict_field: int = Field(strict=True)  # No coercion
+    flexible_field: int = Field(strict=False)  # Allow coercion from string
+    
+    @field_validator('flexible_field', mode='before')
+    @classmethod
+    def coerce_flexible(cls, v: Any) -> int:
+        """Custom coercion logic when needed"""
+        if isinstance(v, str):
+            return int(v.strip())
+        return v
+
+# ====================
+# Inheritance Rules
+# ====================
+
+class BaseEntity(BaseModel):
+    """Base class with common fields"""
+    model_config = ConfigDict(strict=True, extra='forbid')
+    
+    id: int
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+
+class User(BaseEntity):
+    """Inherit configuration and fields"""
+    username: str
+    email: str
+
+# ====================
+# Generic Model Rules
+# ====================
+
+from typing import TypeVar, Generic
+
+T = TypeVar('T')
+
+class Response(BaseModel, Generic[T]):
+    model_config = ConfigDict(strict=True)
+    
+    success: bool
+    data: Optional[T] = None
+    error: Optional[str] = None
+    
+    @model_validator(mode='after')
+    def validate_response(self) -> 'Response':
+        if not self.success and not self.error:
+            raise ValueError('Failed response must have error message')
+        return self
+
+# ====================
+# Best Practices
+# ====================
+
+# 1. Always use type hints
+def process_user(user: UserModel) -> Dict[str, Any]:
+    return user.model_dump()
+
+# 2. Validate at boundaries
+async def api_endpoint(data: dict) -> UserModel:
+    # Validate incoming data immediately
+    user = UserModel(**data)
+    return user
+
+# 3. Use discriminated unions for complex types
+class Cat(BaseModel):
+    pet_type: Literal['cat']
+    meows: int
+
+class Dog(BaseModel):
+    pet_type: Literal['dog']
+    barks: int
+
+Pet = Union[Cat, Dog]
+
+# 4. Document models with examples
+class DocumentedModel(BaseModel):
+    """User profile model"""
+    model_config = ConfigDict(
+        strict=True,
+        json_schema_extra={
+            "example": {
+                "name": "John Doe",
+                "age": 30
+            }
+        }
+    )
+    
+    name: str = Field(description="User's full name")
+    age: int = Field(gt=0, description="Age in years")
+
+# 5. Use factory functions for complex initialization
+@classmethod
+def from_legacy_format(cls, legacy_data: dict) -> 'UserModel':
+    """Convert legacy format to current model"""
+    return cls(
+        id=legacy_data['user_id'],
+        username=legacy_data['user_name'],
+        # ... mapping logic
+    )
+
+# ====================
+# Testing Rules
+# ====================
+
+import pytest
+from pydantic import ValidationError
+
+def test_strict_validation():
+    """Test that strict mode prevents type coercion"""
+    
+    # This should fail in strict mode
+    with pytest.raises(ValidationError):
+        UserModel(id="123", username="test")  # id should be int, not str
+    
+    # This should succeed
+    user = UserModel(id=123, username="test")
+    assert user.id == 123
+
+# ====================
+# Common Patterns
+# ====================
+
+# Settings/Configuration pattern
+class Settings(BaseModel):
+    model_config = ConfigDict(
+        strict=True,
+        env_file='.env',
+        env_file_encoding='utf-8',
+        case_sensitive=False
+    )
+    
+    database_url: str
+    api_key: str = Field(min_length=32)
+    debug: bool = False
+    max_connections: int = Field(default=100, ge=1, le=1000)
+
+# Request/Response pattern
+class CreateUserRequest(BaseModel):
+    model_config = ConfigDict(strict=True, extra='forbid')
+    
+    username: str = Field(min_length=3, max_length=50)
+    email: str
+    password: str = Field(min_length=8)
+
+class UserResponse(BaseModel):
+    model_config = ConfigDict(strict=True)
+    
+    id: int
+    username: str
+    email: str
+    created_at: datetime
+    # Never include password in response
+
+# Repository pattern with validation
+class UserRepository:
+    @staticmethod
+    def create(data: CreateUserRequest) -> UserResponse:
+        # Data is already validated by Pydantic
+        # Proceed with database operation
+        pass

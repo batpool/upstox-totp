@@ -1,0 +1,112 @@
+[project]
+name = "upstox-totp"
+version = "0.1.1"
+description = "A lightweight Python package that simplifies Upstox API authentication by handling TOTP-based login and token generation automatically. With this library, you can securely generate and refresh access tokens required to connect to the Upstox trading platform without manual intervention."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "batpool", email = "satyabrata.7059@gmail.com" }]
+requires-python = ">=3.12"
+keywords = [
+  "upstox_totp",
+  "upstox",
+  "api",
+  "sdk",
+  "trading",
+  "broker",
+  "stock",
+  "futures",
+  "options",
+  "forex",
+  "crypto",
+  "investing",
+]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Internet :: Name Service (DNS)",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Typing :: Typed",
+]
+
+dependencies = [
+  "click>=8.3.0",
+  "curl-cffi>=0.13.0",
+  "dotenv>=0.9.9",
+  "pydantic>=2.11.9",
+  "pyotp>=2.9.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/batpool/upstox-totp"
+Repository = "https://github.com/batpool/upstox-totp"
+Issues = "https://github.com/batpool/upstox-totp/issues"
+
+[tool.basedpyright]
+include = ["src"]
+exclude = [
+  "**/.cache",
+  "**/.pyenv",
+  "**/.venv",
+  "**/node_modules",
+  "**/__pycache__",
+  "src/experimental",
+  "src/typestubs",
+  "src/typestubs",
+  "tailwindcss",
+  "static",
+]
+
+defineConstant = { DEBUG = true }
+
+typeCheckingMode = "basic"
+
+reportExplicitAny = "none"
+reportAny = "none"
+reportImportCycles = "none"
+reportUnannotatedClassAttribute = "none"
+reportUnknownVariableType = "none"
+
+[tool.isort]
+profile = "black"
+src_paths = ["src"]
+combine_as_imports = true
+
+
+[tool.black]
+line-length = 200
+include = '\.pyi?$'
+extend-exclude = """
+/(
+  # The following are specific to Black, you probably don't want those.
+  tests/data
+  | profiling
+  | .github
+  | app/data
+)/
+"""
+
+[project.scripts]
+upstox_cli = "upstox_totp:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/upstox_totp/*.py",
+  "src/upstox_totp/_api/*.py",
+  "src/upstox_totp/py.typed",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/upstox_totp"]
+include = ["src/upstox_totp/py.typed"]
+
+[dependency-groups]
+dev = ["black>=25.9.0", "isort>=6.0.1"]
