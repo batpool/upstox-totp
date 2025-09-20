@@ -1,6 +1,6 @@
 [project]
 name = "upstox-totp"
-version = "0.1.1"
+version = "1.0.0"
 description = "A lightweight Python package that simplifies Upstox API authentication by handling TOTP-based login and token generation automatically. With this library, you can securely generate and refresh access tokens required to connect to the Upstox trading platform without manual intervention."
 readme = "README.md"
 license = { file = "LICENSE" }
