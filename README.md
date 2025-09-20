@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/upstox-totp.png" alt="upstox-totp.png-logo" width="100%" />
+  <img src="https://raw.githubusercontent.com/batpool/upstox-totp/master/assets/upstox-totp.png" alt="upstox-totp.png-logo" width="100%" />
 </p>
 
 
@@ -539,9 +539,9 @@ access_token = token_manager.get_valid_token()
 
 ## 🎓 Examples
 
-Check out the [`examples/`](examples/) directory for more comprehensive examples:
+Check out the [`examples/`](https://github.com/batpool/upstox-totp/tree/master/examples/) directory for more comprehensive examples:
 
-- [`quickstart.py`](examples/quickstart.py) - Basic token generation
+- [`quickstart.py`](https://github.com/batpool/upstox-totp/blob/master/examples/quickstart.py) - Basic token generation
 - More examples coming soon!
 
 ## 🤝 Contributing
@@ -578,7 +578,7 @@ uv run isort src/
 
 ## 📝 License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](https://github.com/batpool/upstox-totp/blob/master/LICENSE) file for details.
 
 ## ⚠️ Important Notes
 
