@@ -15,6 +15,11 @@ A modern, lightweight Python package that simplifies Upstox API authentication b
 </p>
 
 <p align="center">
+  <a href="https://upstox-totp.readthedocs.io/en/latest/"><img src="https://img.shields.io/readthedocs/upstox-totp?logo=readthedocs&logoColor=white&label=Documentation" alt="Documentation Status" /></a>
+  <a href="https://upstox-totp.readthedocs.io/en/latest/"><img src="https://img.shields.io/badge/docs-latest-brightgreen?logo=readthedocs&logoColor=white" alt="Documentation" /></a>
+</p>
+
+<p align="center">
   <a href="https://pypi.org/project/upstox-totp/"><img src="https://img.shields.io/badge/PyPI%20Trusted%20Publishing-✅%20Verified-brightgreen?logo=pypi&logoColor=white" alt="Trusted Publishing" /></a>
   <a href="https://github.com/batpool/upstox-totp/actions"><img src="https://img.shields.io/github/actions/workflow/status/batpool/upstox-totp/release.yml?branch=master&logo=github&logoColor=white&label=CI/CD" alt="Build Status" /></a>
   <a href="https://github.com/batpool/upstox-totp"><img src="https://img.shields.io/github/stars/batpool/upstox-totp?logo=github&logoColor=white&color=yellow" alt="GitHub Stars" /></a>
@@ -43,6 +48,7 @@ A modern, lightweight Python package that simplifies Upstox API authentication b
 - **🔧 Environment Configuration** – Auto-configuration from environment variables
 - **💡 Helpful Error Messages** – Clear error messages with troubleshooting guidance
 - **🔒 Secure by Design** – Uses secure SecretStr for sensitive data handling
+- **📚 Comprehensive Documentation** – Detailed guides and API reference at [upstox-totp.readthedocs.io](https://upstox-totp.readthedocs.io/en/latest/)
 
 ## 📚 Table of Contents
 
@@ -64,6 +70,7 @@ A modern, lightweight Python package that simplifies Upstox API authentication b
   - [Main Classes](#main-classes)
   - [Response Models](#response-models)
   - [Access Token Data](#access-token-data)
+- [📚 Documentation](#-documentation)
 - [🛠️ CLI Commands](#️-cli-commands)
   - [Check Environment](#check-environment)
   - [Generate Token](#generate-token)
@@ -300,6 +307,38 @@ class AccessTokenData:
     is_active: bool       # Account status
     # ... more fields
 ```
+
+## 📚 Documentation
+
+For comprehensive documentation, tutorials, and examples, visit our official documentation:
+
+**🌐 [upstox-totp.readthedocs.io](https://upstox-totp.readthedocs.io/en/latest/)**
+
+The documentation includes:
+
+- **📖 User Guide**
+  - [Installation Guide](https://upstox-totp.readthedocs.io/en/latest/installation.html)
+  - [Quick Start Guide](https://upstox-totp.readthedocs.io/en/latest/quickstart.html)
+  - [Configuration Guide](https://upstox-totp.readthedocs.io/en/latest/configuration.html)
+  - [Advanced Usage Guide](https://upstox-totp.readthedocs.io/en/latest/advanced_usage.html)
+  - [CLI Reference](https://upstox-totp.readthedocs.io/en/latest/cli_reference.html)
+
+- **🔍 API Reference**
+  - [Client API Reference](https://upstox-totp.readthedocs.io/en/latest/api/client.html)
+  - [Data Models Reference](https://upstox-totp.readthedocs.io/en/latest/api/models.html)
+  - [Error Handling Reference](https://upstox-totp.readthedocs.io/en/latest/api/errors.html)
+  - [Logging Reference](https://upstox-totp.readthedocs.io/en/latest/api/logging.html)
+
+- **💡 Examples & Tutorials**
+  - [Basic Usage Examples](https://upstox-totp.readthedocs.io/en/latest/examples/basic_usage.html)
+  - [Integration Examples](https://upstox-totp.readthedocs.io/en/latest/examples/integration.html)
+  - [Token Caching Examples](https://upstox-totp.readthedocs.io/en/latest/examples/token_caching.html)
+  - [Database Storage Examples](https://upstox-totp.readthedocs.io/en/latest/examples/database_storage.html)
+
+- **🛡️ Additional Information**
+  - [Security Best Practices](https://upstox-totp.readthedocs.io/en/latest/security.html)
+  - [Troubleshooting Guide](https://upstox-totp.readthedocs.io/en/latest/troubleshooting.html)
+  - [Contributing Guide](https://upstox-totp.readthedocs.io/en/latest/contributing.html)
 
 ## 🛠️ CLI Commands
 
