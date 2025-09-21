@@ -6,6 +6,9 @@ dist/
 wheels/
 *.egg-info
 
+# Documentation build files
+docs/_build/
+
 # Virtual environments
 .venv
 .DS_Store
