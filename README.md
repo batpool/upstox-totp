@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/batpool/upstox-totp/master/assets/upstox-totp.png" alt="upstox-totp.png-logo" width="100%" />
+  <img src="https://cdn.statically.io/gh/batpool/upstox-totp/master/assets/upstox-totp.png" alt="upstox-totp.png-logo" width="100%" />
 </p>
 
 
