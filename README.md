@@ -7,15 +7,21 @@
 
 A modern, lightweight Python package that simplifies Upstox API authentication by handling TOTP-based login and token generation automatically. With this library, you can securely generate and refresh access tokens required to connect to the Upstox trading platform without manual intervention.
 
-
-> [!IMPORTANT]
-> If you discover a security vulnerability, please do the responsible thing, 
-> **Privately report it** to me at [satyabrata.7059@gmail.com](mailto:satyabrata.7059@gmail.com)
->
+<p align="center">
+  <a href="https://pypi.org/project/upstox-totp/"><img src="https://img.shields.io/pypi/v/upstox-totp?logo=pypi&logoColor=white&label=PyPI&color=blue" alt="PyPI Version" /></a>
+  <a href="https://pypi.org/project/upstox-totp/"><img src="https://img.shields.io/pypi/dm/upstox-totp?logo=pypi&logoColor=white&label=Downloads&color=green" alt="PyPI Downloads" /></a>
+  <a href="https://pypi.org/project/upstox-totp/"><img src="https://img.shields.io/pypi/pyversions/upstox-totp?logo=python&logoColor=white&label=Python" alt="Python Versions" /></a>
+  <a href="https://github.com/batpool/upstox-totp/blob/master/LICENSE"><img src="https://img.shields.io/pypi/l/upstox-totp?logo=opensource&logoColor=white&color=green" alt="License" /></a>
+</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/python-3.12+-blue?logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/license-MIT-green?logo=opensource&logoColor=white" />
+  <a href="https://pypi.org/project/upstox-totp/"><img src="https://img.shields.io/badge/PyPI%20Trusted%20Publishing-✅%20Verified-brightgreen?logo=pypi&logoColor=white" alt="Trusted Publishing" /></a>
+  <a href="https://github.com/batpool/upstox-totp/actions"><img src="https://img.shields.io/github/actions/workflow/status/batpool/upstox-totp/release.yml?branch=master&logo=github&logoColor=white&label=CI/CD" alt="Build Status" /></a>
+  <a href="https://github.com/batpool/upstox-totp"><img src="https://img.shields.io/github/stars/batpool/upstox-totp?logo=github&logoColor=white&color=yellow" alt="GitHub Stars" /></a>
+  <a href="https://github.com/batpool/upstox-totp/issues"><img src="https://img.shields.io/github/issues/batpool/upstox-totp?logo=github&logoColor=white" alt="GitHub Issues" /></a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/pydantic-v2-blue?logo=pydantic&logoColor=white" />
   <img src="https://img.shields.io/badge/secure%20by%20design-🔒-brightgreen" />
   <img src="https://img.shields.io/badge/CLI%20tool-⚡-orange" />
