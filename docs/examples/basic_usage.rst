@@ -556,7 +556,7 @@ Custom Session Configuration
 
    # Add custom headers
    upx.session.headers.update({
-       'User-Agent': 'MyTradingApp/1.0',
+       'User-Agent': 'MyTradingApp/2.0',
        'Accept-Language': 'en-US'
    })
 
