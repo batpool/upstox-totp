@@ -1,7 +1,7 @@
 Upstox TOTP Python SDK
 ======================
 
-.. image:: https://raw.githubusercontent.com/batpool/upstox-totp/master/assets/upstox-totp.png
+.. image:: https://cdn.statically.io/gh/batpool/upstox-totp/master/assets/upstox-totp.png
    :alt: Upstox TOTP Logo
    :align: center
    :width: 100%
