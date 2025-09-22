@@ -17,8 +17,8 @@ project = "Upstox TOTP"
 copyright = "2025, batpool"
 author = "batpool"
 
-release = "1.0.3"
-version = "1.0.3"
+release = "1.0.7"
+version = "1.0.7"
 
 extensions = [
     "sphinx.ext.autodoc",
