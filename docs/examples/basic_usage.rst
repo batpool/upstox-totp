@@ -61,7 +61,7 @@ With Error Handling
    # Usage
    token = get_upstox_token()
    if token:
-       print(f"Success! Token: {token[:20]}...")
+       print(f"Success! Token: {token[:30]}...")
    else:
        print("Failed to get token")
 
