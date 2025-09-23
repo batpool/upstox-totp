@@ -92,7 +92,6 @@ class OTPValidationUserProfile(BaseModel):
 
 
 class OTPValidationData(BaseModel):
-    # {'message': 'Your OTP/TOTP has been successfully verified.', 'userType': 'CUSTOMER', 'userProfile': {'profileId': 50581523, 'userId': '4CCWF2', 'firstName': 'Chikkala Phani', 'lastName': 'Naidu', 'avatarUrl': None}, 'isSecretPinSet': True}
     message: str
     userType: str
     userProfile: OTPValidationUserProfile
